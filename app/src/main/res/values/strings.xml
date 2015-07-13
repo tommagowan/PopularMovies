@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Popular Movies</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="pref_sortMoveisBy">Sort Movies By</string>
+    <string name="pref_sortMoviesBy_default">@string/pref_sortMoviesBy_mostPopular</string>
+    <string name="pref_sortMoviesBy_key">pref_sortMoviesBy</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_lastSortMoviesBy_key">pref_lastSortMoviesBy_key</string>
+    <string name="pref_lastRefreshTs_key">pref_lastRefreshTs_key</string>
+    <string name="pref_sortMoviesBy_mostPopular">popularity_desc</string>
+    <string name="pref_sortMoviesBy_highestRated">voteAverage_desc</string>
+    <string name="title_activity_movie_details">Movie Details</string>
+    <string name="movie_details_content_description">Movie Poster</string>
 </resources>

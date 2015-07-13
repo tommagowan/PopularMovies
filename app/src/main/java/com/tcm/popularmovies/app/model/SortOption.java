@@ -1,17 +1,18 @@
 package com.tcm.popularmovies.app.model;
 
 public enum SortOption {
-    popularity_desc("popularity.desc");
+    popularity_desc("popularity.desc"),
+    voteAverage_desc("vote_average.desc");
 
-    private String optionString;
+    private String tmdbSortAttributeValue;
 
-    SortOption(String optionString) {
-        this.optionString = optionString;
+    SortOption(String tmdbSortAttributeValue) {
+        this.tmdbSortAttributeValue = tmdbSortAttributeValue;
     }
-
 
     @Override
     public String toString() {
-        return optionString;
+        return tmdbSortAttributeValue;
     }
+
 }
