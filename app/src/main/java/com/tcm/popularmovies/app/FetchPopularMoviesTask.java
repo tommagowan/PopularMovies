@@ -1,6 +1,9 @@
 package com.tcm.popularmovies.app;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -19,16 +22,26 @@ class FetchPopularMoviesTask extends AsyncTask<Void, Void, Exception> {
     private final TMDbService tmDbService;
     private Context context;
     private SortOption sortOption;
+    private ProgressDialog progressDialog;
 
     public FetchPopularMoviesTask(TMDbService tmDbService, Context context, SortOption sortOption) {
         this.tmDbService = tmDbService;
         this.context = context;
         this.sortOption = sortOption;
+        this.progressDialog = new ProgressDialog(context);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressDialog.setTitle("Refreshing");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
     }
 
     @Override
     protected Exception doInBackground(Void... params) {
         try {
+            checkNetworkAvailable();
             MoviesPage movies = tmDbService.listPopularMovies(sortOption, TMDbService.TMDB_DATE_FORMAT.format(new Date()));
             saveMovies(movies);
         } catch (Exception e) {
@@ -47,6 +60,7 @@ class FetchPopularMoviesTask extends AsyncTask<Void, Void, Exception> {
             Toast toast = Toast.makeText(context, "Error occurred while fetching movie data: " + e.getMessage(), Toast.LENGTH_LONG);
             toast.show();
         }
+        progressDialog.dismiss();
     }
 
     private void saveMovies(MoviesPage movies) {
@@ -63,4 +77,13 @@ class FetchPopularMoviesTask extends AsyncTask<Void, Void, Exception> {
         }
     }
 
+    //Based on a stackoverflow snippet
+    private void checkNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
+            throw new IllegalStateException("Network is unavailable");
+        }
+    }
 }

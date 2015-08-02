@@ -11,7 +11,7 @@ import retrofit.http.Query;
 import static java.util.Locale.getDefault;
 
 public interface TMDbService {
-    String API_KEY = /* insert your tmdb key here */;
+    String API_KEY = "b8ba303fd9b20657d60c39bc5119ca2d";
     SimpleDateFormat TMDB_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", getDefault());
 
     @GET("/discover/movie?api_key=" + API_KEY + "&vote_count.gte=10")
